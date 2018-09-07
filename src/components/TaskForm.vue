@@ -19,8 +19,9 @@
         <div class="form-row">
             <div class="form-group col">
                 <select v-model="task.user_id" class="selectpicker show-tick" data-style="btn-default" id="user_id" name="user_id">
-                    <option value="">Geen verantwoordelijke</option>
-                    <option v-for="user in users" v-bind:value="user.id">{{ user.name }} <{{ user.email }}></option>
+                    <option value="" disabled="disabled">Geen verantwoordelijke</option>
+                    <option v-for="user in users"
+                            :value="user.id">{{ user.name }} <{{ user.email }}></option>
                 </select>
             </div>
         </div>
@@ -29,7 +30,8 @@
             <div class="form-group col">
                 <select v-model="task.list_id" class="selectpicker show-tick" data-style="btn-default" id="list_id" name="list_id">
                     <option value="">Takenlijst</option>
-                    <option v-for="list in tasklists" v-bind:value="list.id">{{ list.name }}</option>
+                    <option v-for="list in tasklists"
+                            :value="list.id">{{ list.name }}</option>
                 </select>
             </div>
         </div>
@@ -72,6 +74,7 @@
         ],
 
         mounted() {
+
             this.task.due_date = jQuery('#due_date_hidden').val();
         },
 
@@ -84,11 +87,12 @@
         methods: {
             save() {
                 this.task.due_date = jQuery('#due_date_hidden').val();
-                this.$parent.saveTask(this.task);
+                this.$emit('saveTask', this.task);
+                // this.task = this.emptyTask;
             },
 
             cancel() {
-                this.$parent.cancelEdit();
+                this.$emit('cancel');
             }
         }
     }

@@ -10,13 +10,13 @@
         </div>
 
         <div class="box-body">
-            <ul class="todo-list" v-if="tasklist.tasks.length">
+            <ul class="todo-list">
                 <li v-for="task in tasks" v-bind:class="{'task-finished': task.done, 'task-danger': task.overdue && !task.done}">
                     <input type="checkbox" @click="toggleStatus(task)" :checked="task.done != null" />
                     <span class="text">{{ task.task }}</span>
                     <div class="tools">
-                        <a @click="edit(task)"><i class="fa fa-pencil"></i></a>
-                        <a @click="remove(task)"><i class="fa fa-trash"></i></a>
+                        <a class="btn btn-success" @click="edit(task)"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-danger" @click="remove(task)"><i class="fa fa-trash"></i></a>
                     </div>
                     <div class="right">
                         <small class="label label-default"><i class="fa fa-clock-o"></i> {{ task.due_date }}</small>
@@ -31,7 +31,7 @@
     export default {
         data() {
             return {
-                tasks: [],
+                tasks: this.tasklist.tasks,
             }
         },
 
@@ -49,17 +49,17 @@
 
         methods: {
             getTasks() {
-                axios.get('/api/projects/' + this.tasklist.project.slug + '/lists/' + this.tasklist.id + '/tasks')
-                    .then(response => {
-                        this.tasks = response.data.tasks;
-                    });
+                // axios.get('/api/projects/' + this.tasklist.project.slug + '/lists/' + this.tasklist.id + '/tasks')
+                //     .then(response => {
+                //         this.tasks = response.data.tasks;
+                //     });
             },
 
             toggleStatus(task) {
-                axios.post('/api/projects/' + this.tasklist.project.slug + '/lists/' + task.list_id + '/tasks/' + task.id + '/toggle')
-                    .then(response => {
-                        this.getTasks();
-                    });
+                // axios.post('/api/projects/' + this.tasklist.project.slug + '/lists/' + task.list_id + '/tasks/' + task.id + '/toggle')
+                //     .then(response => {
+                //         this.getTasks();
+                //     });
             },
 
             edit(task) {
